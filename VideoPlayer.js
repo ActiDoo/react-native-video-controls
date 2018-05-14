@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Video from 'react-native-video';
+import ImageZoom from 'react-native-image-pan-zoom';
+
 import {
     TouchableWithoutFeedback,
     TouchableHighlight,
@@ -15,6 +17,8 @@ import {
     Text
 } from 'react-native';
 import _ from 'lodash';
+
+var {height, width} = Dimensions.get('window');
 
 export default class VideoPlayer extends Component {
 
@@ -1103,6 +1107,12 @@ export default class VideoPlayer extends Component {
                 style={[ styles.player.container, this.styles.containerStyle ]}
             >
                 <View style={[ styles.player.container, this.styles.containerStyle ]}>
+                  <ImageZoom
+                    cropWidth={width}
+                    cropHeight={height}
+                    imageWidth={width}
+                    imageHeight={height}
+                  >
                     <Video
                         { ...this.props }
                         ref={ videoPlayer => this.player.ref = videoPlayer }
@@ -1123,10 +1133,11 @@ export default class VideoPlayer extends Component {
 
                         source={ this.props.source }
                     />
-                    { this.renderError() }
-                    { this.renderTopControls() }
-                    { this.renderLoader() }
-                    { this.renderBottomControls() }
+                  </ImageZoom>
+                  { this.renderError() }
+                  { this.renderTopControls() }
+                  { this.renderLoader() }
+                  { this.renderBottomControls() }
                 </View>
             </TouchableWithoutFeedback>
         );
